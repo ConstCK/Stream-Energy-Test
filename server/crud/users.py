@@ -52,7 +52,6 @@ class UserService:
                 verify_password(plain_password=data.password,
                                 hashed_password=result.password) is False):
             return None
-
         return result
 
 

@@ -1,5 +1,5 @@
-from database.db import Base
 from sqlalchemy.orm import Mapped, mapped_column
+from database.db import Base
 
 
 class User(Base):

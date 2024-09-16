@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 import uvicorn
 
 from config import settings
-from database.db import Base, engine, init_models
+from database.db import init_models
 from routers.users import router as user_router
 
 
