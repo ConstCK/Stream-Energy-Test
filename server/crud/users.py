@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Request
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -14,12 +14,6 @@ class UserService:
                  tag_service: TagService = Depends()) -> None:
         self.db = session
         self.tag_service = tag_service
-
-    # Получение списка всех пользователей
-    async def get_users(self, tg_id: int) -> list[User] | list:
-        query = select(UserTable).where(UserTable.tg_id == tg_id)
-        result = await self.db.execute(query)
-        return result.scalars().all()
 
     # Получение пользователя по имени
     async def get_user_by_tg_id(self, tg_id: int) -> User:
@@ -53,8 +47,4 @@ class UserService:
                 'user': user.username, 'token': token}
 
     # Проверка доступа к данным
-    async def access_granted(self, token: str) -> bool:
-        tg_id = validate_access_token(token)
-        query = select(UserTable).where(UserTable.tg_id == tg_id)
-        result = await self.db.execute(query)
-        return True if result else False
+

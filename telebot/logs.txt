@@ -1,0 +1,5 @@
+14:16:49,769 aiogram.dispatcher INFO Start polling
+14:16:49,848 aiogram.dispatcher INFO Run polling for bot @notes_stream_energy_bot id=6651730866 - 'StreamEnergyBot'
+14:17:03,943 aiogram.event INFO Update id=583989727 is handled. Duration 358 ms by bot id=6651730866
+14:17:30,982 aiogram.dispatcher INFO Polling stopped
+14:17:31,235 aiogram.dispatcher INFO Polling stopped for bot @notes_stream_energy_bot id=6651730866 - 'StreamEnergyBot'

@@ -1,7 +1,6 @@
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Response, Request
 from passlib.context import CryptContext
 from jose import jwt, JWTError
-
 
 from config import settings
 
@@ -36,4 +35,25 @@ def validate_access_token(token: str) -> int | None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Токен не валидный!')
 
 
+# Получение token из cookies
+def get_token(request: Request):
+    token = request.cookies.get('access_token')
+    if not token:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Token не найден')
+    return token
 
+
+# Удаление token из cookies
+def delete_token(response: Response) -> None:
+    response.delete_cookie(key='access_token')
+
+
+# Назначение token в cookies
+def set_token(response: Response, token: str) -> None:
+    response.set_cookie(key='access_token', value=token)
+
+
+def access_granted(request: Request) -> bool:
+    token = get_token(request)
+    result = validate_access_token(token)
+    return True if result else False
