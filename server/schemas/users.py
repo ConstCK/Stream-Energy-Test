@@ -20,6 +20,3 @@ class UserCreation(BaseUser):
     password: str = Field(description='Пароль пользователя',
                           min_length=4,
                           max_length=16)
-
-
-

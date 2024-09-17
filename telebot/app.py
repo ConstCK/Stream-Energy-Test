@@ -7,6 +7,7 @@ from aiogram import Bot, Dispatcher
 
 from config import settings
 from keyboards.keyboards import auth_keyboard
+from handlers.auth_handlers import router as auth_router
 
 # Создание бота
 bot = Bot(token=settings.bot_token.get_secret_value())
@@ -15,7 +16,7 @@ bot = Bot(token=settings.bot_token.get_secret_value())
 dp = Dispatcher()
 
 # Добавление маршрута с обработчиками к диспетчеру
-# dp.include_routers(auth_router)
+dp.include_routers(auth_router)
 
 
 @dp.message(CommandStart())

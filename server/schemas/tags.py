@@ -5,7 +5,6 @@ class BaseTag(BaseModel):
     name: str
 
 
-
 class Tag(BaseTag):
     id: int
 

@@ -1,7 +1,7 @@
 import datetime
 import enum
 
-from sqlalchemy import String, func, ForeignKey, UniqueConstraint
+from sqlalchemy import String, func, ForeignKey, UniqueConstraint, BigInteger, BIGINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database.db import Base
@@ -30,7 +30,7 @@ class User(Base):
     __tablename__ = 'users'
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    tg_id: Mapped[int] = mapped_column(unique=True)
+    tg_id: Mapped[int] = mapped_column(BigInteger(), unique=True)
     username: Mapped[str]
     password: Mapped[str]
     notes: Mapped[list['Note']] = relationship(back_populates='user')
