@@ -1,10 +1,13 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from contextlib import asynccontextmanager
 import uvicorn
 
 from config import settings
-from database.db import init_models
+
+from initial_tasks import init_models, create_tags
+
 from routers.users import router as user_router
+from routers.notes import router as note_router
 
 
 # Создание события при запуске (и остановке) сервера (если нужно)
@@ -12,6 +15,8 @@ from routers.users import router as user_router
 async def lifespan(app: FastAPI):
     print('startup')
     await init_models()
+    await create_tags()
+
     yield
     print('shutdown')
 
@@ -25,6 +30,7 @@ app = FastAPI(
 
 # Включение маршрутов в основное приложение
 app.include_router(user_router, tags=['users'])
+app.include_router(note_router, tags=['notes'])
 
 
 @app.get('/', description='Приветственная надпись', )

@@ -2,25 +2,34 @@ from fastapi import Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from crud.tags import TagService
 from database.db import get_db
-from models.users import User as UserTable
-from schemas.users import User, UserCreation, AuthUser
-from services.auth import get_password_hash, create_access_token, verify_password
+from models.models import User as UserTable
+from schemas.users import User, UserCreation
+from services.auth import get_password_hash, create_access_token, validate_access_token
 
 
 class UserService:
-    def __init__(self, session: AsyncSession = Depends(get_db)) -> None:
+    def __init__(self, session: AsyncSession = Depends(get_db),
+                 tag_service: TagService = Depends()) -> None:
         self.db = session
+        self.tag_service = tag_service
 
     # Получение списка всех пользователей
-    async def get_users(self) -> list[User] | list:
-        query = select(UserTable)
+    async def get_users(self, tg_id: int) -> list[User] | list:
+        query = select(UserTable).where(UserTable.tg_id == tg_id)
         result = await self.db.execute(query)
-        return list(result.scalars().all())
+        return result.scalars().all()
+
+    # Получение пользователя по имени
+    async def get_user_by_tg_id(self, tg_id: int) -> User:
+        query = select(UserTable).where(UserTable.tg_id == tg_id)
+        result = await self.db.execute(query)
+        return result.scalar()
 
     # Создание пользователя(регистрация)
     async def create_user(self, data: UserCreation) -> dict['str', 'str']:
-        query = select(UserTable).where(UserTable.email == data.email)
+        query = select(UserTable).where(UserTable.tg_id == data.tg_id)
         db_user = await self.db.execute(query)
         result = db_user.scalar()
 
@@ -31,31 +40,21 @@ class UserService:
         hashed_password = get_password_hash(data.password)
         db_user = UserTable(username=data.username,
                             password=hashed_password,
-                            email=data.email)
+                            tg_id=data.tg_id)
 
         self.db.add(db_user)
         await self.db.commit()
         await self.db.refresh(db_user)
-        query = select(UserTable).where(UserTable.email == data.email)
+        query = select(UserTable).where(UserTable.tg_id == data.tg_id)
         db_user = await self.db.execute(query)
         user = db_user.scalar()
-        token = create_access_token({'id': user.id})
+        token = create_access_token({'id': user.tg_id})
         return {'message': 'Регистрация прошла успешно',
                 'user': user.username, 'token': token}
 
-    # Аутентификация пользователя (проверка email&password)
-    async def authenticate_user(self, data: AuthUser) -> User | None:
-        query = select(UserTable).where(UserTable.email == data.email)
-        db_user = await self.db.execute(query)
-        result = db_user.scalar()
-        if (not db_user or
-                verify_password(plain_password=data.password,
-                                hashed_password=result.password) is False):
-            return None
-        return result
-
-
-
-
-
-
+    # Проверка доступа к данным
+    async def access_granted(self, token: str) -> bool:
+        tg_id = validate_access_token(token)
+        query = select(UserTable).where(UserTable.tg_id == tg_id)
+        result = await self.db.execute(query)
+        return True if result else False

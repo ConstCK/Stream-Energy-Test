@@ -3,6 +3,7 @@ from sqlalchemy.orm import DeclarativeBase
 
 from config import settings
 
+
 engine = create_async_engine(settings.db_url, echo=True)
 
 async_session = async_sessionmaker(bind=engine, autocommit=False, autoflush=False)
@@ -22,8 +23,10 @@ async def get_db() -> AsyncSession:
             await session.close()
 
 
-async def init_models() -> None:
-    async with engine.begin() as conn:
-        # await conn.run_sync(Base.metadata.drop_all)
-        # Создание таблиц в БД
-        await conn.run_sync(Base.metadata.create_all)
+
+
+
+
+
+
+
