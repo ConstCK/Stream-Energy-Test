@@ -7,7 +7,7 @@ from crud.users import UserService
 
 from schemas.notes import Note, NoteCreation, NoteUpdate
 
-# Маршрут с добавлением функции-проверки прав доступа check_access
+# Маршрут для заметок
 router = APIRouter(prefix='/api/v1/notes',)
 
 
@@ -16,10 +16,10 @@ router = APIRouter(prefix='/api/v1/notes',)
             status_code=status.HTTP_200_OK, name='get_all_notes_url',
             responses={200: {'description': 'Успешное получение объектов'}, }
             )
-async def get_notes(request: Request, tg_id: int, tag: str = None, service: NoteService = Depends(),
+async def get_notes(request: Request, tg_id: int, tag_id: int = None, service: NoteService = Depends(),
                     user_service: UserService= Depends(), ):
 
-    result = await service.get_all_notes(tg_id=tg_id, tag=tag)
+    result = await service.get_all_notes(tg_id=tg_id, tag_id=tag_id)
     return result
 
 

@@ -18,7 +18,7 @@ class UserService:
         self.tag_service = tag_service
 
     # Получение пользователя по имени
-    async def get_user_by_tg_id(self, tg_id: str) -> User:
+    async def get_user_by_tg_id(self, tg_id: int) -> User:
         query = select(UserTable).where(UserTable.tg_id == tg_id)
         result = await self.db.execute(query)
         return result.scalar()

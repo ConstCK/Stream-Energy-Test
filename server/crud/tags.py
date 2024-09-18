@@ -17,6 +17,12 @@ class TagService:
         result = await self.db.execute(query)
         return result.scalar()
 
+    # Получение тега по id
+    async def get_tag_by_id(self, tag_id: int) -> Tag:
+        query = select(TagTable).where(TagTable.id == tag_id)
+        result = await self.db.execute(query)
+        return result.scalar()
+
     # Создание тегов
     async def create_tag(self, name: str) -> Tag:
         query = insert(TagTable).values({'name': name}).returning(TagTable)
@@ -25,10 +31,7 @@ class TagService:
         return result.scalar()
 
     # Получение всех тегов
-    async def get_tags(self, ) -> list[Tag]:
+    async def get_all_tags(self, ) -> list[Tag]:
         query = select(TagTable)
         result = await self.db.execute(query)
         return result.scalars().all()
-
-
-

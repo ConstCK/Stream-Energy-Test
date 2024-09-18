@@ -1,14 +1,14 @@
 from typing import Any
 
 from fastapi import Depends
-from sqlalchemy import select, insert, delete, update, and_
+from sqlalchemy import select, insert, update, and_
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload, joinedload
+from sqlalchemy.orm import selectinload
 
 from crud.users import UserService
 from crud.tags import TagService
 from database.db import get_db
-from schemas.notes import NoteCreation, NoteUpdate
+from schemas.notes import NoteCreation, NoteUpdate, Note
 from models.models import Note as NoteTable
 from models.models import Tag as TagTable
 
@@ -22,14 +22,17 @@ class NoteService:
         self.tag_service = tag_service
 
     # Получение всех заметок или заметок с тегами (если они указанны)
-    async def get_all_notes(self, tg_id: int, tag: str):
+    async def get_all_notes(self, tg_id: int, tag_id: int = None) -> list[Note] | list:
         user = await self.user_service.get_user_by_tg_id(tg_id)
-        if tag:
-            tag_object = await self.tag_service.get_tag_by_name(tag)
-            query = (select(NoteTable)
-                     .where(NoteTable.user_id == user.id)
-                     .where(NoteTable.tags.any(TagTable.name == tag_object.name))
-                     .options(selectinload(NoteTable.tags)))
+        if tag_id:
+            tag_object = await self.tag_service.get_tag_by_id(tag_id)
+            if tag_object is not None:
+                query = (select(NoteTable)
+                         .where(NoteTable.user_id == user.id)
+                         .where(NoteTable.tags.any(TagTable.id == tag_object.id))
+                         .options(selectinload(NoteTable.tags)))
+            else:
+                return []
         else:
             query = (select(NoteTable)
                      .where(NoteTable.user_id == user.id)
@@ -60,7 +63,7 @@ class NoteService:
         result = await self.db.scalar(query)
 
         for i in data.tags:
-            tag = await self.tag_service.get_tag_by_name(name=i)
+            tag = await self.tag_service.get_tag_by_id(tag_id=int(i))
             result.tags.append(tag)
 
         await self.db.commit()

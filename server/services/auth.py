@@ -43,16 +43,6 @@ def get_token(request: Request):
     return token
 
 
-# Удаление token из cookies
-# def delete_token(response: Response) -> None:
-#     response.delete_cookie(key='access_token')
-
-
-# Назначение token в cookies
-# def set_token(response: Response, token: str) -> None:
-#     response.set_cookie(key='access_token', value=token)
-
-
 def access_granted(request: Request) -> bool:
     token = get_token(request)
     result = validate_access_token(token)

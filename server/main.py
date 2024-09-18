@@ -8,6 +8,7 @@ from initial_tasks import init_models, create_tags
 
 from routers.users import router as user_router
 from routers.notes import router as note_router
+from routers.tags import router as tag_router
 
 
 # Создание события при запуске (и остановке) сервера (если нужно)
@@ -31,6 +32,7 @@ app = FastAPI(
 # Включение маршрутов в основное приложение
 app.include_router(user_router, tags=['users'])
 app.include_router(note_router, tags=['notes'])
+app.include_router(tag_router, tags=['tags'])
 
 
 @app.get('/', description='Приветственная надпись', )
