@@ -5,6 +5,7 @@
 * В терминале создайте виртуальное окружение (например python -m venv venv) и активируйте его (venv\scripts\activate)
 * Установите все зависимости при помощи pip install -r requirements.txt
 * Создайте файл .env в каталоге проекта и пропишите в нем настройки по примеру .env.example
+* Создайте BOT_TOKEN при помощи Telegram BotFather (можете пока использовать мой...)
 * Запустите Docker-Desktop
 
 ## Запуск Docker-Desktop и контейнер с приложением:
@@ -19,7 +20,7 @@ https://t.me/notes_stream_energy_bot
 
 http://localhost:8888/
 
-Используйте /start для запуска бота и следуйте инструкциям на экране.
+**_Используйте /start в Telegram для запуска бота и следуйте инструкциям на экране._**
 
 _В проекте использовалось:
 FastApi для backend
