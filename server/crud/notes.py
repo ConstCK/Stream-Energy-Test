@@ -1,4 +1,4 @@
-from fastapi import Depends
+from fastapi import Depends, HTTPException, status
 from sqlalchemy import select, insert, update, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -77,8 +77,9 @@ class NoteService:
             await self.db.commit()
             return {'message': f'Заметка № {note_id} успешно удалена'}
 
-        except Exception as err:
-            return {'message': f'Удаление заметки не удалось -> {err}'}
+        except Exception :
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail='Объект для удаления не существует')
 
     # Обновление заметки
     async def update_note(self, note_id: int, data: NoteUpdate) -> dict[str, str]:
@@ -97,5 +98,6 @@ class NoteService:
             await self.db.commit()
             await self.db.refresh(result)
             return {'message': f'Заметка № {note_id} успешно обновлена'}
-        except Exception as err:
-            return {'message': f'Обновление заметки не удалось -> {err}'}
+        except Exception:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail='Объект для обновления не существует')
