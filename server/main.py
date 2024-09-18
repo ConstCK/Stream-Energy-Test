@@ -73,6 +73,4 @@ async def greetings() -> dict:
 
 # Запуск сервера
 if __name__ == '__main__':
-    # For development only (too slow for production)
-
     uvicorn.run('main:app', host=settings.host, port=8000, reload=True)

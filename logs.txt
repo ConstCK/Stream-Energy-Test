@@ -166,3 +166,5 @@ WHERE users.tg_id = $1::BIGINT
 18:05:22,539 watchfiles.main INFO 39 changes detected
 18:05:23,226 watchfiles.main INFO 6 changes detected
 18:05:23,583 watchfiles.main INFO 51 changes detected
+18:49:54,95 aiogram.dispatcher INFO Polling stopped
+18:49:54,360 aiogram.dispatcher INFO Polling stopped for bot @notes_stream_energy_bot id=6651730866 - 'StreamEnergyBot'

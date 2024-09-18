@@ -1,0 +1,43 @@
+services:
+  server:
+    build: .
+    ports:
+      - "8000:8000"
+    command: bash -c "cd server && python main.py"
+
+    depends_on:
+      my_db:
+        condition: service_healthy
+
+  telebot:
+    build: .
+    command: bash -c "cd telebot && python app.py"
+    depends_on:
+      - server
+
+
+  my_db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_DB: "postgres"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - '8888:8080'
+
+volumes:
+  postgres_data:

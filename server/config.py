@@ -7,7 +7,8 @@ load_dotenv()
 
 
 class Settings(BaseSettings):
-    host: str = 'localhost'
+    # host: str = 'localhost'
+    host: str = '0.0.0.0'
 
     # Url для postgresql связи
     db_url: str = (f'postgresql+asyncpg://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}'
