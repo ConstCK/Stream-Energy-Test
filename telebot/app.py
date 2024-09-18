@@ -1,7 +1,7 @@
 import asyncio
 import logging
 
-from aiogram.filters import CommandStart, Command
+from aiogram.filters import CommandStart
 from aiogram.types import Message
 from aiogram import Bot, Dispatcher
 
@@ -18,6 +18,8 @@ dp = Dispatcher()
 
 # Добавление маршрута с обработчиками к диспетчеру
 dp.include_routers(auth_router, main_router)
+
+# Стартовый обработчик с auth меню
 
 
 @dp.message(CommandStart())

@@ -3,6 +3,8 @@ import requests
 
 from services.constants import BASE_URL, TAGS_URL
 
+# Запрос для получения всех тегов
+
 
 def get_all_tags(token: str):
     r = requests.get(url=f'{BASE_URL}{TAGS_URL}',

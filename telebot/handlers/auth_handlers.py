@@ -11,13 +11,13 @@ from keyboards.keyboards import auth_keyboard, data_keyboard
 
 router = Router()
 
-
+# Обработчик регистрации пользователя
 @router.message(F.text == 'Регистрация')
 async def cmd_registration(message: Message, state: FSMContext):
     await message.answer(text=f'Укажите пароль {message.from_user.full_name}...', )
     await state.set_state(Stages.password_verifying)
 
-
+# Обработчик проверки и отправки данных пользователя для регистрации
 @router.message(StateFilter(Stages.password_verifying))
 async def registration_handler(message: Message, state: FSMContext):
     data = {
@@ -38,20 +38,20 @@ async def registration_handler(message: Message, state: FSMContext):
         await message.answer(text='Произошла ошибка регистрации...',
                              reply_markup=await auth_keyboard())
 
-
+# Обработчик logout
 @router.message(F.text == 'Выход')
 async def cmd_logout(message: Message, state: FSMContext):
     await state.clear()
 
     await message.answer(text='Вы вышли из аккаунта. Для получения данных авторизируйтесь снова.')
 
-
+# Обработчик авторизации пользователя 
 @router.message(F.text == 'Авторизация')
 async def cmd_registration(message: Message, state: FSMContext):
     await message.answer(text=f'Укажите пароль {message.from_user.full_name}...', )
     await state.set_state(Stages.authorization)
 
-
+# Обработчик проверки и отправки данных пользователя для авторизации
 @router.message(StateFilter(Stages.authorization))
 async def login_handler(message: Message, state: FSMContext):
     data = {

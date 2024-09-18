@@ -12,7 +12,7 @@ async def auth_keyboard():
         builder.add(KeyboardButton(text=c))
     return builder.adjust(2).as_markup(resize_keyboard=True)
 
-# Создание клавиатуры для получения данных
+# Создание клавиатуры для вызова меню получения данных
 
 
 async def data_keyboard():

@@ -43,6 +43,7 @@ def get_token(request: Request):
     return token
 
 
+# Получение токена из cookies и его проверка
 def access_granted(request: Request) -> bool:
     token = get_token(request)
     result = validate_access_token(token)

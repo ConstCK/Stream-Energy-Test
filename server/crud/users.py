@@ -1,14 +1,12 @@
-import json
-
-from fastapi import Depends, HTTPException, status, Request
-from sqlalchemy import select, and_
+from fastapi import Depends, HTTPException, status
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from crud.tags import TagService
 from database.db import get_db
 from models.models import User as UserTable
-from schemas.users import User, UserCreation, BaseUser
-from services.auth import get_password_hash, create_access_token, validate_access_token, verify_password
+from schemas.users import User, UserCreation
+from services.auth import get_password_hash, create_access_token, verify_password
 
 
 class UserService:

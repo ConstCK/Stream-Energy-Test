@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status, Depends
 
 from crud.users import UserService
-from schemas.users import UserCreation, BaseUser
+from schemas.users import UserCreation
 
 # Маршрут для auth
 router = APIRouter(prefix='/api/v1/users')

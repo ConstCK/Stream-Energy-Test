@@ -106,3 +106,63 @@ WHERE pg_catalog.pg_type.typname = $1::VARCHAR AND pg_catalog.pg_type_is_visible
 16:59:17,12 sqlalchemy.engine.Engine INFO [generated in 0.00020s] ('DAILY',)
 16:59:17,17 watchfiles.main INFO 5 changes detected
 16:59:17,20 sqlalchemy.engine.Engine INFO ROLLBACK
+17:51:29,667 sqlalchemy.engine.Engine INFO select pg_catalog.version()
+17:51:29,667 sqlalchemy.engine.Engine INFO [raw sql] ()
+17:51:29,668 sqlalchemy.engine.Engine INFO select current_schema()
+17:51:29,668 sqlalchemy.engine.Engine INFO [raw sql] ()
+17:51:29,669 sqlalchemy.engine.Engine INFO show standard_conforming_strings
+17:51:29,669 sqlalchemy.engine.Engine INFO [raw sql] ()
+17:51:29,669 sqlalchemy.engine.Engine INFO BEGIN (implicit)
+17:51:29,671 sqlalchemy.engine.Engine INFO SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+17:51:29,671 sqlalchemy.engine.Engine INFO [generated in 0.00026s] ('notes_tags_association', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+17:51:29,674 sqlalchemy.engine.Engine INFO SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+17:51:29,674 sqlalchemy.engine.Engine INFO [cached since 0.002708s ago] ('users', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+17:51:29,674 sqlalchemy.engine.Engine INFO SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+17:51:29,674 sqlalchemy.engine.Engine INFO [cached since 0.003202s ago] ('notes', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+17:51:29,675 sqlalchemy.engine.Engine INFO SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+17:51:29,675 sqlalchemy.engine.Engine INFO [cached since 0.003656s ago] ('tags', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+17:51:29,676 sqlalchemy.engine.Engine INFO SELECT pg_catalog.pg_type.typname 
+FROM pg_catalog.pg_type JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_type.typnamespace 
+WHERE pg_catalog.pg_type.typname = $1::VARCHAR AND pg_catalog.pg_type_is_visible(pg_catalog.pg_type.oid) AND pg_catalog.pg_namespace.nspname != $2::VARCHAR
+17:51:29,676 sqlalchemy.engine.Engine INFO [generated in 0.00015s] ('tagname', 'pg_catalog')
+17:51:29,676 sqlalchemy.engine.Engine INFO COMMIT
+17:51:29,677 sqlalchemy.engine.Engine INFO BEGIN (implicit)
+17:51:29,680 watchfiles.main INFO 5 changes detected
+17:51:29,680 sqlalchemy.engine.Engine INFO INSERT INTO tags (name) VALUES ($1::tagname) RETURNING tags.id, tags.name
+17:51:29,681 sqlalchemy.engine.Engine INFO [generated in 0.00015s] ('DAILY',)
+17:51:29,687 sqlalchemy.engine.Engine INFO ROLLBACK
+17:52:04,4 aiogram.event INFO Update id=583990345 is handled. Duration 312 ms by bot id=6651730866
+17:52:05,512 aiogram.event INFO Update id=583990346 is handled. Duration 125 ms by bot id=6651730866
+17:52:10,300 my_fastapi_app INFO Request: POST http://localhost:8000/api/v1/users/signup
+17:52:10,304 sqlalchemy.engine.Engine INFO BEGIN (implicit)
+17:52:10,305 sqlalchemy.engine.Engine INFO SELECT users.id, users.tg_id, users.username, users.password 
+FROM users 
+WHERE users.tg_id = $1::BIGINT
+17:52:10,305 sqlalchemy.engine.Engine INFO [generated in 0.00032s] (5538525076,)
+17:52:10,308 sqlalchemy.engine.Engine INFO ROLLBACK
+17:52:10,308 my_fastapi_app INFO Response: 409
+17:52:10,422 aiogram.event INFO Update id=583990347 is handled. Duration 2187 ms by bot id=6651730866
+17:52:59,969 watchfiles.main INFO 4 changes detected
+17:53:00,553 watchfiles.main INFO 1 change detected
+17:53:00,911 watchfiles.main INFO 5 changes detected
+17:53:08,463 aiogram.event INFO Update id=583990348 is handled. Duration 327 ms by bot id=6651730866
+17:53:14,728 my_fastapi_app INFO Request: POST http://localhost:8000/api/v1/users/login
+17:53:14,916 my_fastapi_app INFO Response: 201
+17:53:15,65 aiogram.event INFO Update id=583990349 is handled. Duration 2407 ms by bot id=6651730866
+17:53:41,795 my_fastapi_app INFO Request: GET http://localhost:8000/api/v1/notes?tg_id=5538525076
+17:53:41,795 my_fastapi_app INFO Response: 307
+17:53:41,797 my_fastapi_app INFO Request: GET http://localhost:8000/api/v1/notes/?tg_id=5538525076
+17:53:41,807 my_fastapi_app INFO Response: 200
+17:53:43,87 aiogram.event INFO Update id=583990350 is handled. Duration 3343 ms by bot id=6651730866
+18:02:13,693 watchfiles.main INFO 1 change detected
+18:05:22,539 watchfiles.main INFO 39 changes detected
+18:05:23,226 watchfiles.main INFO 6 changes detected
+18:05:23,583 watchfiles.main INFO 51 changes detected

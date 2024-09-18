@@ -2,6 +2,7 @@ from crud.tags import TagService
 from database.db import engine, Base, async_session
 
 
+# Создание таблиц в БД при запуске приложения
 async def init_models() -> None:
     async with engine.begin() as conn:
         # Создание таблиц в БД
@@ -16,10 +17,7 @@ async def create_tags():
             await tag_service.create_tag('DAILY')
             await tag_service.create_tag('IMPORTANT')
             await tag_service.create_tag('WEEKLY')
-        except:
+        except Exception:
             pass
         finally:
             await session.close()
-
-
-

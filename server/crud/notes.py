@@ -1,5 +1,3 @@
-from typing import Any
-
 from fastapi import Depends
 from sqlalchemy import select, insert, update, and_
 from sqlalchemy.ext.asyncio import AsyncSession

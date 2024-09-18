@@ -1,9 +1,6 @@
-from typing import Any
-
 from fastapi import APIRouter, status, Depends, Request
 
 from crud.notes import NoteService
-from crud.users import UserService
 
 from schemas.notes import Note, NoteCreation, NoteUpdate
 from services.auth import access_granted

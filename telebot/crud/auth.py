@@ -3,6 +3,8 @@ import requests
 
 from services.constants import BASE_URL, USER_URL
 
+# Запрос для регистрации пользователя
+
 
 def register_user(data: dict[str, str | int]) -> str | None:
     payload = {
@@ -15,6 +17,8 @@ def register_user(data: dict[str, str | int]) -> str | None:
 
     result = r.text
     return result
+
+# Запрос для авторизации пользователя
 
 
 def login_user(data: dict[str, int | str]) -> str | None:
