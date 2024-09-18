@@ -37,6 +37,7 @@ if __name__ == '__main__':
     # For development only (too slow for production)
 
     logging.basicConfig(
+        filename='../logs.txt',
         filemode='a',
         format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
         datefmt='%H:%M:%S',

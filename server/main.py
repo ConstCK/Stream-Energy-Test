@@ -1,4 +1,6 @@
-from fastapi import FastAPI, Depends
+import logging
+
+from fastapi import FastAPI, Request
 from contextlib import asynccontextmanager
 import uvicorn
 
@@ -28,6 +30,23 @@ app = FastAPI(
     description='For StreamEnergy test...',
     lifespan=lifespan
 )
+# Логирование
+logger = logging.getLogger("my_fastapi_app")
+logging.basicConfig(
+    filename='../logs.txt',
+    filemode='a',
+    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+    datefmt='%H:%M:%S',
+    level=logging.INFO)
+
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    logger.info(f"Request: {request.method} {request.url}")
+    response = await call_next(request)
+    logger.info(f"Response: {response.status_code}")
+    return response
+
 
 # Включение маршрутов в основное приложение
 app.include_router(user_router, tags=['users'])
@@ -42,4 +61,6 @@ async def greetings() -> dict:
 
 # Запуск сервера
 if __name__ == '__main__':
+    # For development only (too slow for production)
+
     uvicorn.run('main:app', host=settings.host, port=8000, reload=True)
