@@ -5,7 +5,7 @@
 * В терминале создайте виртуальное окружение (например python -m venv venv) и активируйте его (venv\scripts\activate)
 * Установите все зависимости при помощи pip install -r requirements.txt
 * Создайте файл .env в каталоге проекта и пропишите в нем настройки по примеру .env.example
-* Создайте BOT_TOKEN при помощи Telegram BotFather (можете пока использовать мой...)
+* Создайте BOT_TOKEN при помощи Telegram BotFather 
 * Запустите Docker-Desktop
 
 ## Запуск Docker-Desktop и контейнер с приложением:
